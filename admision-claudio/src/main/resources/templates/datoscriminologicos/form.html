@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+
+
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <hr>
+        <h2 th:text="${titulo}" class="text-center" style="font-family: arial narrow bold"></h2>
+        <div class="form" style="width: 90hv; margin: 20px; ">
+            <div class="tab-content">
+                <form th:action="@{'/detenidos/' + ${yourDetenidoId} + '/datosCriminologicos/guardar'}"
+                    th:object="${datoCriminologico}" method="post" class="was-validated">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-4">
+                                
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Personales</div>
+                                            <span class="text-success bi bi-check2-circle "> Completado</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Judiciales</div>
+                                            <span class="text-success bi bi-check2-circle "> Completado</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Criminológicos</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                </ol>
+
+                            </div>
+                            <div class="col col-8 shadow p-3 mb-5 bg-body rounded">
+                                <div class="row">
+                                    <div class="col col-5">
+                                        <div class="form">
+                                            <label for="apo" class="form-label">Alias / Apodo</label>
+                                            <input required id="apo" type="text" class="form-control" th:field="*{aliasApodo}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger" th:errors="*{aliasApodo}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-3">
+                                        <div class="form-group">
+                                            <label for="re" class="form-label">Reincidencia</label>
+                                            <input required id="re" type="text" class="form-control" th:field="*{reincidencia}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger" th:errors="*{reincidencia}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-4">
+                                        <div class="form-group">
+                                            <label for="per" class="form-label">Permanencia / transito</label>
+                                            <input required id="per" type="text" class="form-control"
+                                                th:field="*{permanenciaTransito}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger"
+                                                th:errors="*{permanenciaTransito}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12" style="">
+                                        <div class="form">
+                                            <label for="sit" class="form-label mt-2">Situacion Legal</label>
+                                            <input required id="sit" type="text" class="form-control"
+                                                th:field="*{condenadoProcesado}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger"
+                                                th:errors="*{condenadoProcesado}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="form" style="">
+                                        <label for="be" class="form-label mt-2"> Benefecios</label>
+                                        <input required id="be" type="text" class="form-control" th:field="*{beneficios}"
+                                            th:errorClass="'form-control alert-warning'" />
+                                        <small class="form-label text-danger" th:errors="*{beneficios}"></small>
+                                    </div>
+                                    <div class="form" style="">
+                                        <label for="mod" class="form-label mt-2">Modalidaad de Salida Transitoria</label>
+                                        <input required id="mod" type="text" class="form-control"
+                                            th:field="*{salidaTransitoriaModalidad}"
+                                            th:errorClass="'form-control alert-warning'" />
+                                        <small class="form-label text-danger"
+                                            th:errors="*{salidaTransitoriaModalidad}"></small>
+                                    </div>
+                                </div>
+                                <p>Detenido ID: <span th:text="${yourDetenidoId}"></span></p>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-outline-primary btn-dark float-end ms-2">
+                                        Continuar
+                                    </button>
+                                    <a href="/home" class="btn text-white btn-outline-secondary btn-dark float-end">
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:fragment="js"></script>
+
+    <script
+        th:if="${formulario.estadoDatosJudiciales == 'Pendiente' && formulario.estadoDatosCriminologicos == 'Pendiente'}">
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos Judiciales Pendientes',
+                text: 'Completa primero los datos judiciales antes de acceder a los datos criminológicos.',
+                confirmButtonText: 'OK',
+                onClose: () => {
+                    window.location.href = "@{'/detenidos/' + ${formulario.idDetenido} + '/datosJudiciales/nuevo'}";
+                }
+            });
+        </script>
+
+
+</body>
+
+</html>

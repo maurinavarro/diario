@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <hr>
+        <div class="alert alert-danger" th:if="${errorArchivos}">
+            <p th:text="${errorArchivos}"></p>
+        </div>
+        <h2 th:text="${titulo}" class="text-center" style="font-family: arial narrow bold"></h2>
+        <div class="form" style="width: 90hv; margin: 20px; ">
+            <div class="tab-content">
+                <form th:action="@{'/detenidos/' + ${yourDetenidoId} + '/datosJudiciales/guardar'}"
+                    th:object="${datoJudicial}" method="post" enctype="multipart/form-data" class="was-validated">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-4">
+                                <hr>
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Personales</div>
+                                            <span class="text-success bi bi-check2-circle "> Completado</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Judiciales</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+                                            <i class=""></i>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Criminológicos</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="col col-8  p-3 mb-5 bg-body rounded">
+                                <div class="row shadow pt-4">
+                                    <div class="col col-5 form-group">
+                                        <div class="upload" >
+                                            <label for="archivoOficio" class="mb-2">Ingrese Oficio de Alojamiento</label>
+                                            <input type="file" name="file" id="archivoOficio" accept="application/pdf">
+                                        </div>
+                                    </div>
+                                    <div class="col col-4">
+                                        <div class="form-group">
+                                            <label for="ofi" class="form-label">Numero de Oficio</label>
+                                            <input required id="ofi" type="text" class="form-control"
+                                                th:field="*{oficio}" th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger" th:errors="*{oficio}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-3">
+                                        <div class="form-group" >
+                                            <label for="fechaDetencion" class="mb-2">Fecha de Detención:</label>
+                                            <input type="date" id="fechaDetencion" name="fechaDetencion" required
+                                                class="form-control" th:field="*{fechaDetencion}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger" th:errors="*{fechaDetencion}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12">
+                                        <div class="form-group" style="margin: 05px;">
+                                            <label for="cau" class="form-label">Causa</label>
+                                            <input required id="cau" type="text" class="form-control"
+                                                th:field="*{causa}" th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger" th:errors="*{causa}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12" >
+                                        <div class="form-group" style="margin: 05px;">
+                                            <label for="juz" class="form-label">Juzgado Interviniente</label>
+                                            <input required id="juz" type="text" class="form-control"
+                                                th:field="*{juzgadoInterviniente}"
+                                                th:errorClass="'form-control alert-warning'" />
+                                            <small class="form-label text-danger"
+                                                th:errors="*{juzgadoInterviniente}"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12">
+                                    <div class="form-group" style="margin: 05px;">
+                                        <label for="cir" class="form-label">Circunscripción Judicial</label>
+                                        <input required id="cir" type="text" class="form-control"
+                                            th:field="*{circunscripcionJudicial}"
+                                            th:errorClass="'form-control alert-warning'" />
+                                        <small class="form-label text-danger"
+                                            th:errors="*{circunscripcionJudicial}"></small>
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="form-group" style="margin: 05px;">
+                                        <label for="rein" class="form-label">¿Es Reincidente?</label>
+                                        <input required id="rein" type="text" class="form-control"
+                                            th:field="*{reincidente}" th:errorClass="'form-control alert-warning'" />
+                                        <small class="form-label text-danger" th:errors="*{reincidente}"></small>
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="form-group" style="margin: 05px;" >
+                                        <label for="pueb" class="form-label">¿Tiene otras Causas?</label>
+                                        <input required id="pueb" type="text" class="form-control"
+                                            th:field="*{otraCausa}" th:errorClass="'form-control alert-warning'" />
+                                        <small class="form-label text-danger" th:errors="*{otraCausa}"></small>
+                                    </div>
+                                <div class="col col-12">
+                                    <div class="form-group"style="margin: 05px;" >
+                                        <label for="situacionLegal" class="mb-2">Situación Legal:</label>
+                                        <select id="situacionLegal" name="situacionLegal" required class="form-control"
+                                            onchange="toggleArchivos(this.value)">
+                                            <option value="" disabled selected>Seleccionar según corresponda</option>
+                                            <option value="condenado">Condenado</option>
+                                            <option value="procesado">Procesado</option>
+                                        </select>
+                                    </div>
+                                    <div id="archivosContainer" style="display: none;">
+                                        <div class="row shadow p-3  mt-3">
+                                            <hr>
+                                            <div class="upload col col-6">
+                                                <label for="archivoSentencia">Ingrese Sentencia</label>
+                                                <input type="file" name="file_1" id="archivoSentencia"
+                                                    accept="application/pdf" onchange="checkFiles()">
+                                            </div>
+                                            <div class="upload col col-6">
+                                                <label for="archivoComputo">Ingrese Computo de Pena</label>
+                                                <input type="file" name="file_3" id="archivoComputo"
+                                                    accept="application/pdf" onchange="checkFiles()">
+                                            </div>
+                                            <hr>
+                                            <div class="form col col-6k">
+                                                <label for="cama" class="form-label">Camara Condenatoria</label>
+                                                <input required id="cama" name="camaraCondenatoria" type="text" class="form-control"
+                                                    th:field="*{camaraCondenatoria}"
+                                                    th:errorClass="'form-control alert-warning'" />
+                                                <small class="form-label text-danger"
+                                                    th:errors="*{camaraCondenatoria}"></small>
+                                            </div>
+
+                                            <div class="form col col-6">
+                                                <label for="fechaC" class="form-label">fecha de la Condena</label>
+                                                <input type="date" id="fechaC" name="fechaCondena" required
+                                                    class="form-control" th:field="*{fechaCondena}"
+                                                    th:errorClass="'form-control alert-warning'" />
+                                                <small class="form-label text-danger"
+                                                    th:errors="*{fechaCondena}"></small>
+                                            </div>
+
+                                            <div class="col col-6" >
+                                                <div class="form">
+                                                    <label for="cimp" class="form-label mt-2">Condena Impuesta</label>
+                                                    <input required id="cimp" type="text" name="condenaImpuesta" class="form-control"
+                                                        th:field="*{condenaImpuesta}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{condenaImpuesta}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6" >
+                                                <div class="form">
+                                                    <label for="sen" class="form-label mt-2">Sentencia</label>
+                                                    <input required id="sen" type="text"  name="sentencia" class="form-control"
+                                                        th:field="*{sentencia}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{sentencia}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-12" >
+                                                <div class="form-group">
+                                                    <label for="reduc" class="form-label mt-2">Redección de Pena</label>
+                                                    <input name="ReduccionPena" required id="reduc" type="text" class="form-control"
+                                                        th:field="*{ReduccionPena}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{ReduccionPena}"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col col-6" >
+                                                <div class="form">
+                                                    <label for="lib" class="form-label mt-2">Fecha de Agotamiento de
+                                                        Pena</label>
+                                                    <input name="fechaLibertadAgotamiento" required id="lib" type="text" class="form-control"
+                                                        th:field="*{fechaLibertadAgotamiento}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{fechaLibertadAgotamiento}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6" >
+                                                <div class="form-group">
+                                                    <label for="libcon" class="form-label mt-2">Fecha para Libertad
+                                                        Condicional</label>
+                                                    <input name="libertadCondicional" required id="libcon" type="text" class="form-control"
+                                                        th:field="*{libertadCondicional}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{libertadCondicional}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6" >
+                                                <div class="form">
+                                                    <label for="asis" class="form-label mt-2">Fecha para Libertad
+                                                        Asistida</label>
+                                                    <input name="libertadAsistida" required id="asis" type="text" class="form-control"
+                                                        th:field="*{libertadAsistida}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{libertadAsistida}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6" >
+                                                <div class="form-group">
+                                                    <label for="susp" class="form-label mt-2">Suspención de
+                                                        Beneficios</label>
+                                                    <input name="suspencionBeneficio" required id="susp" type="text" class="form-control"
+                                                        th:field="*{suspencionBeneficio}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{suspencionBeneficio}"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Detenido ID: <span th:text="${yourDetenidoId}"></span></p>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-outline-primary btn-dark float-end ms-2 mt-2 mb-2">
+                                        Continuar
+                                    </button>
+                                    <a href="/home" class="btn text-white btn-outline-secondary btn-dark float-end mt-2 mb-2">
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script th:fragment="js" th:src="@{/js/judicial.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <META http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+
+            
+            <form th:action="@{/detenidos/{idDetenido}/enviarSolicitud(idDetenido=${detenido.id})}" method="post">
+                <button type="submit" class="btn btn-success" >Finalizar</button>
+                <a th:href="@{/home}" class="btn btn-danger"> Cancelar</a>
+                <div class="row" style="padding: 5px; margin: 5px; font-size: medium; font-family: verdana;">
+
+                    <h1 class="text-center">Detalle del Detenido</h1>
+                    <div class=" col col-4">
+                        <h3 class="mt-4 mb-3">Datos Personales:</h3>
+
+                        <p>Nombre: <span th:text="${detenido.nombreApellido}"></span></p>
+                        <p>DNI: <span th:text="${detenido.dni}"></span></p>
+                        <p>Ultimo Domicilio: <span th:text="${detenido.ultimoDomicilio}"></span></p>
+                        <p>Situación Laboral: <span th:text="${detenido.situacionLaboral}"></span></p>
+                        <p>Nombre del Padre: <span th:text="${detenido.nombrePadre}"></span></p>
+                        <p>Apellido del Padre: <span th:text="${detenido.apellidoPadre}"></span></p>
+                        <p>Nombre de la Madre: <span th:text="${detenido.nombreMadre}"></span></p>
+                        <p>Apellido de la Madre: <span th:text="${detenido.apellidoMadre}"></span></p>
+                        <p>Situación Educativa: <span th:text="${detenido.SituacionEducativaIngreso}"></span></p>
+                        <p>Pueblo Originario: <span th:text="${detenido.puebloOriginario}"></span></p>
+                        <p>Pertenece a fuerza de Seguridad: <span th:text="${detenido.fuerza}"></span></p>
+
+                    </div>
+                    <div class="col col-4">
+                        <h3 class="mt-4 mb-3">Datos Judiciales:</h3>
+                        <p>Situación Legal: <span th:text="${detenido.datosJudiciales.situacionLegal}"></span></p>
+                        <p>Oficio: <span th:text="${detenido.datosJudiciales.oficio}"></span></p>
+                        <p>Fecha de Detención: <span th:text="${detenido.datosJudiciales.fechaDetencion}"></span></p>
+                        <p>Causa: <span th:text="${detenido.datosJudiciales.causa}"></span></p>
+                        <p>Juzgado Interviniente: <span
+                                th:text="${detenido.datosJudiciales.juzgadoInterviniente}"></span></p>
+                        <p>Circunscripción Judicial: <span
+                                th:text="${detenido.datosJudiciales.circunscripcionJudicial}"></span>
+                        </p>
+                        <p>Camara Condenatoria: <span th:text="${detenido.datosJudiciales.camaraCondenatoria}"></span>
+                        </p>
+                        <p>Fecha de Condena: <span th:text="${detenido.datosJudiciales.fechaCondena}"></span></p>
+                        <p>Condenaa Impuesta: <span th:text="${detenido.datosJudiciales.condenaImpuesta}"></span></p>
+                        <p>Sentencia Nº: <span th:text="${detenido.datosJudiciales.sentencia}"></span></p>
+                        <p>Reducción de Pena: <span th:text="${detenido.datosJudiciales.ReduccionPena}"></span></p>
+                        <p>Reincidente: <span th:text="${detenido.datosJudiciales.reincidente}"></span></p>
+                        <p>Otra Causa: <span th:text="${detenido.datosJudiciales.otraCausa}"></span></p>
+                        <p>Fecha de Agotamiento: <span
+                                th:text="${detenido.datosJudiciales.FechaLibertadAgotamiento}"></span>
+                        </p>
+                        <p>Libertad Condicional: <span th:text="${detenido.datosJudiciales.libertadCondicional}"></span>
+                        </p>
+                        <p>Libertad Asistida: <span th:text="${detenido.datosJudiciales.libertadAsistida}"></span></p>
+                        <p>Suspención de Beneficio: <span
+                                th:text="${detenido.datosJudiciales.suspencionBeneficio}"></span></p>
+                    </div>
+                    <div class="col col-4">
+                        <h3 class="mt-4 mb-3">Datos Criminológicos:</h3>
+                        <p>Alias/Apodo: <span th:text="${detenido.datosCriminologico.aliasApodo}"></span></p>
+                        <p>Reincidencia: <span th:text="${detenido.datosCriminologico.reincidencia}"></span></p>
+                        <p>Permanencia: <span th:text="${detenido.datosCriminologico.permanenciaTransito}"></span></p>
+                        <p>Beneficios: <span th:text="${detenido.datosCriminologico.beneficios}"></span></p>
+                        <p>Modalidad de Salidas Transitorias: <span
+                                th:text="${detenido.datosCriminologico.salidaTransitoriaModalidad}"></span></p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script th:fragment="js"></script>
+
+</body>
+
+</html>

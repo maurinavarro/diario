@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" th:href="@{/style/foto.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link href="https://bootswatch.com/5/morph/bootstrap.min.css" rel="stylesheet"> -->
+
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <hr>
+        <div class="alert alert-danger" th:if="${errorArchivos}">
+            <p th:text="${errorArchivos}"></p>
+        </div>
+
+        <h2 th:text="${titulo}" class="text-center" style="font-family: arial narrow bold"></h2>
+
+        
+
+
+        <div class="form " style="width: 100hv; margin: 20px; ">
+            <div class="tab-content">
+
+                <form th:action="@{/detenidos/guardar}" class="was-validated" method="post" th:object="${detenido}"
+                    enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-3">
+
+                                <div class="upload" for="imagen">
+                                    <span class="text-center"
+                                        style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Ingrese
+                                        foto del Detenido</span>
+                                    <img th:src="@{/img/foto.jpg}" width=100 height=100 alt="">
+                                    <div class="round">
+                                        <input type="file" name="file" id="imagen" accept="image/png, image/jpg">
+                                        <i class="fa fa-camera" style="color: #fff;"></i>
+                                    </div>
+                                </div>
+                                <hr>
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Personales</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Judiciales</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Datos Criminológicos</div>
+                                            <span class="text-danger bi bi-pc-display-horizontal "> Pendiente</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <div class="col col-8 shadow p-3 mb-5 bg-body rounded" style="padding: 0; margin: 0;">
+                                <div class="card">
+                                    <div class="raw" style="padding: 5px; margin: 5px;">
+                                        <div class="row mt-3 ">
+                                            <div class="col col-5">
+                                                <div class="form">
+                                                    <label for="name" class="form-label">Nombre/s y Apellido</label>
+                                                    <input required id="name" type="text" class="form-control"
+                                                        th:field="*{nombreApellido}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{nombreApellido}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-3">
+                                                <div class="form-group">
+                                                    <label for="iden" class="form-label">Dni</label>
+                                                    <input required id="iden" type="text" class="form-control"
+                                                        th:field="*{dni}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger" th:errors="*{dni}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-4">
+                                                <div class="form-group">
+                                                    <label for="lab" class="form-label">Situación Laboral</label>
+                                                    <input required id="lab" type="text" class="form-control"
+                                                        th:field="*{situacionLaboral}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{situacionLaboral}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-8">
+                                                <div class="form">
+                                                    <label for="dom" class="form-label mt-3">Ultimo Domicilio</label>
+                                                    <input required id="dom" type="text" class="form-control"
+                                                        th:field="*{ultimoDomicilio}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{ultimoDomicilio}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-4">
+                                                <div class="form">
+                                                    <label for="fuer" class="form-label mt-3">Pertenecio a Fuerza de
+                                                        Seguridad</label>
+                                                    <input required id="fuer" type="text" class="form-control"
+                                                        th:field="*{fuerza}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger" th:errors="*{fuerza}"></small>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row-mt-3">
+                                            <div class="form">
+                                                <label for="edu" class="form-label mt-3">Situación Educativa al
+                                                    Ingreso</label>
+                                                <input required id="edu" type="text" class="form-control"
+                                                    th:field="*{situacionEducativaIngreso}"
+                                                    th:errorClass="'form-control alert-warning'" />
+                                                <small class="form-label text-danger"
+                                                    th:errors="*{situacionEducativaIngreso}"></small>
+                                            </div>
+                                            <div class="form">
+                                                <label for="pueb" class="form-label mt-3">Pueblo Originario</label>
+                                                <input required id="pueb" type="text" class="form-control"
+                                                    th:field="*{puebloOriginario}"
+                                                    th:errorClass="'form-control alert-warning'" />
+                                                <small class="form-label text-danger"
+                                                    th:errors="*{puebloOriginario}"></small>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col col-6">
+                                                <div class="form">
+                                                    <label for="nompa" class="form-label">Nombre del Padre</label>
+                                                    <input required id="nompa" type="text" class="form-control"
+                                                        th:field="*{nombrePadre}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{nombrePadre}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="form">
+                                                    <label for="apepa" class="form-label">Apellido del Padre</label>
+                                                    <input required id="apepa" type="text" class="form-control"
+                                                        th:field="*{apellidoPadre}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{apellidoPadre}"></small>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col col-6">
+                                                <div class="form">
+                                                    <label for="nomma" class="form-label">Nombre de la Madre</label>
+                                                    <input required id="nomma" type="text" class="form-control"
+                                                        th:field="*{nombreMadre}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{nombreMadre}"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6">
+                                                <div class="form-group">
+                                                    <label for="apema" class="form-label">Apellido de la Madre</label>
+                                                    <input required id="apema" type="text" class="form-control"
+                                                        th:field="*{apellidoMadre}"
+                                                        th:errorClass="'form-control alert-warning'" />
+                                                    <small class="form-label text-danger"
+                                                        th:errors="*{apellidoMadre}"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer align-items-center">
+                                <div class="pt-2"> 
+                                    <button type="submit" class="btn btn-outline-primary btn-dark float-end ms-2">
+                                        Continuar
+                                    </button>
+                                    <a href="/home" class="btn btn-outline-secondary btn-dark float-end text-white">
+                                        Cancelar
+                                    </a>
+                                </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+                <div th:if="${success}" class="alert alert-success">
+                    <p th:text="${success}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:fragment="js"></script>
+
+   
+
+
+</body>
+
+</html>

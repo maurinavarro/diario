@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/style/home.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <!-- Dentro de tu vista -->
+        <div th:if="${correoError}" class="alert alert-danger">
+            <p th:text="${correoError}"></p>
+        </div>
+        <div th:if="${aceptarError}" class="alert alert-danger">
+            <p th:text="${aceptarError}"></p>
+        </div>
+
+        <!--banner-->
+
+        <img sec:authorize="${hasRole('SOLICITANTE')}" th:src="@{/img/slider3.jpg}" class="d-block w-100 mt-0"
+            style="height: 200px; width: 100hv;">
+
+
+
+        <!--Tabla Cupos Unidades Penitenciarias-->
+        <div class="row" style="padding: 0; margin: 0;">
+            <div class="col col-4" sec:authorize="${hasRole('SUPERUSUARIO') or hasRole('ADMINISTRADOR')}">
+                <table
+                    class="table table table-bordered table-hover border border-1 caption-top shadow p-3 mb-5 bg-body-tertiary rounded">
+                    <H4 class="text-center"
+                        style="font-family:'Arial Narrow', Arial; color: rgb(59, 63, 59); font-size: 30px;">Cupo
+                        Unidades Penitenciarias</H4>
+                    <thead style="font-size: 10px">
+                        <tr style="font-size: 10px" class="text-center">
+                            <th>#</th>
+                            <th>Unidad Penitenciaria</th>
+                            <th>Cantidad Internos Alojados</th>
+                            <th>Cupo Maximo por Unidad</th>
+                            <th>Cupos Disponibles por Unidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="u : ${unidades}">
+                            <td th:text="${u.id}">1</td>
+                            <td style="font-size: 10px" class="text-center" th:text="${u.nombre}">1</td>
+                            <td th:text="${u.cantidad}">1</td>
+                            <td th:text="${u.cupo}">1</td>
+                            <td th:text="${u.plaza}">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col col-12" th:if="${rolUsuario == 'SOLICITANTE'}">
+                <H4 class="text-center"
+                    style="font-family:'Arial Narrow', Arial; color: rgb(59, 63, 59); font-size: 30px;">Solicitudes de
+                    Alojamientos</H4>
+                <form id="search-form" action="">
+                    <div id="search-bar" class="input-group">
+                        <input class="form-control form-control-sm" type="search" placeholder="¿Qué estás buscando?" />
+                        <button type="submit" class="btn btn-secondary btn-acciones-principales btn-sm">Buscar</button>
+                    </div>
+                </form>
+                <br>
+                <table
+                    class="table table table-borderedtable-hover border border-1 caption-top shadow p-3 mb-5 bg-body-tertiary rounded table-full-width"
+                    id="tablaHome">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Solicitante</th>
+                            <th>Detenido</th>
+                            <th>Dni</th>
+                            <th>Situacion Legal</th>
+                            <th>Unidad Solicitante</th>
+                            <th>Foto</th>
+                            <th class="text-center">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="unificardatos : ${dataList}">
+                            <td th:text="${unificardatos?.detenido?.id}"></td>
+                            <td th:text="${unificardatos?.nombreUsuario}"></td>
+                            <td th:text="${unificardatos?.detenido?.getNombreApellido()}"></td>
+                            <td th:text="${unificardatos?.detenido?.getDni()}"></td>
+                            <td th:text="${unificardatos?.getDatosJudiciales()?.getSituacionLegal()}"></td>
+                            <td th:text="${unificardatos?.unidadSolicitante}"></td>
+                            <td>
+                                <a>
+                                    <img th:src="@{ ${unificardatos.rutaImagen}}" id="img" alt="Imagen" width="45"
+                                        height="45" />
+                                </a>
+                            </td>
+                            <td th:if="${unificardatos?.estado}">
+                                <a th:href="@{/detenidos/{idDetenido}/detalle(idDetenido=${unificardatos?.detenido?.id})}"
+                                    class="btn btn-sm btn-warning" title="Ver">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col col-8" th:if="${rolUsuario != 'solicitante'}">
+                <H4 class="text-center"
+                    style="font-family:'Arial Narrow', Arial; color: rgb(59, 63, 59); font-size: 30px;">Solicitudes
+                    de Alojamientos</H4>
+                <form id="search-form" action="">
+                    <div id="search-bar" class="input-group">
+                        <input class="form-control form-control-sm" type="search" placeholder="¿Qué estás buscando?" />
+                        <button type="submit" class="btn btn-secondary btn-acciones-principales btn-sm">Buscar</button>
+                    </div>
+                </form>
+                <br>
+                <table
+                    class="table table table-borderedtable-hover border border-1 caption-top shadow p-3 mb-5 bg-body-tertiary rounded table-full-width"
+                    id="tablaHome">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Solicitante</th>
+                            <th>Detenido</th>
+                            <th>Dni</th>
+                            <th>Situacion Legal</th>
+                            <th>Unidad Solicitante</th>
+                            <th>Foto</th>
+                            <th class="text-center">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="unificardatos : ${dataList}">
+                            <td th:text="${unificardatos?.detenido?.id}"></td>
+                            <td th:text="${unificardatos?.nombreUsuario}"></td>
+                            <td th:text="${unificardatos?.detenido?.getNombreApellido()}"></td>
+                            <td th:text="${unificardatos?.detenido?.getDni()}"></td>
+                            <td th:text="${unificardatos?.getDatosJudiciales()?.getSituacionLegal()}"></td>
+                            <td th:text="${unificardatos?.unidadSolicitante}"></td>
+                            <td>
+                                <a>
+                                    <img th:src="@{ ${unificardatos.rutaImagen}}" id="img" alt="Imagen" width="45"
+                                        height="45" />
+                                </a>
+                            </td>
+                            <td th:if="${unificardatos?.estado}">
+                                <a th:href="@{/detenidos/{idDetenido}/detalle(idDetenido=${unificardatos?.detenido?.id})}"
+                                    class="btn btn-sm btn-warning" title="Ver">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+
+                                <form id="aceptarForm"
+                                    th:action="@{/aceptar-solicitud/{idRegistro}(idRegistro=${unificardatos.detenido.id})}"
+                                    method="POST" style="display: inline-block;"
+                                    th:if="${unificardatos?.estadoCorreo != 1 && unificardatos?.estadoCorreo != 2}">
+                                    <button id="aceptarBtn" type="submit" class="btn btn-sm btn-success"
+                                        title="Aceptar">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                </form>
+
+                                <form id="rechazarForm"
+                                    th:action="@{/rechazar-solicitud/{idRegistro}(idRegistro=${unificardatos.detenido.id})}"
+                                    method="POST" style="display: inline-block;"
+                                    th:if="${unificardatos?.estadoCorreo != 1 && unificardatos?.estadoCorreo != 2}">
+                                    <button id="rechazarBtn" type="submit" class="btn btn-sm btn-danger"
+                                        title="Rechazar">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <div id="paginacion">
+                        <button class="bi bi-caret-left-fill btn-outline-success" id="anterior" style="border-radius: 10px;"></button>
+                        <span id="paginaActual" style="margin: 0 3px;">1</span>
+                        <button class="bi bi-caret-right-fill btn-outline-success" id="siguiente" style="border-radius: 10px;"></button>
+                    </div>
+                </table>
+
+
+            </div>
+            <div class="col col-12">
+                <H4 class="text-center"
+                    style="font-family:'Arial Narrow', Arial; color: rgb(59, 63, 59); font-size: 30px;">Estado de las
+                    Solicitudes de
+                    Alojamientos</H4>
+                <table id="tablaHome1"
+                    class="table table table-borderedtable-hover border border-1 caption-top shadow p-3 mb-5 bg-body-tertiary rounded">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Detenido</th>
+                            <th>Datos Personales</th>
+                            <th>Datos Judiciales</th>
+                            <th>Datos Criminologicos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="formulario : ${estadoFormularios}">
+                            <td th:text="${formulario.idDetenido}"></td>
+                            <td th:text="${formulario.nombreDetenido}"></td>
+                            <td th:text="${formulario.estadoDetenido}"
+                                th:class="${formulario.estadoDetenido == 'Completado' ? 'completado' : 'pendiente'}">
+                            </td>
+                            <td>
+                                <a th:if="${formulario.estadoDatosJudiciales == 'Pendiente'}" class="pendiente"
+                                    th:href="@{'/detenidos/' + ${formulario.idDetenido} + '/datosJudiciales/nuevo'}">
+                                    Pendiente
+                                </a>
+                                <span th:if="${formulario.estadoDatosJudiciales == 'Completado'}" class="completado">
+                                    Completado
+                                </span>
+                            </td>
+                            <td>
+                                <a th:if="${formulario.estadoDatosCriminologicos == 'Pendiente'}" class="pendiente"
+                                    th:href="@{'/detenidos/' + ${formulario.idDetenido} + '/datosCriminologicos/nuevo'}">
+                                    Pendiente
+                                </a>
+                                <span th:if="${formulario.estadoDatosCriminologicos == 'Completado'}"
+                                    class="completado">
+                                    Completado
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <div id="paginacion">
+                        <button class="bi bi-caret-left-fill btn-outline-success" id="anterior1" style="border-radius: 10px;"></button>
+                        <span id="paginaActual1" style="margin: 0 3px;">1</span>
+                        <button class="bi bi-caret-right-fill btn-outline-success" id="siguiente1" style="border-radius: 10px;"></button>
+                    </div>
+
+                </table>
+
+
+            </div>
+        </div>
+        <hr>
+        <!-- footer -->
+        <footer id=" footer"
+            style="background-color:rgb(255, 255, 255);color:rgb(23, 22, 22);padding:20px; font-family:arial narrow ;">
+            <div class="footer-top">
+                <div>
+                    <a style="display: inline-flex; float: right;">
+                        <img alt="LOGO" th:src="@{/img/banderaArgentina.jpg}" id="img" height="45" />
+                    </a>
+                    <a style="display: inline-flex; float: left; ">
+                        <img alt="LOGO" th:src="@{/img/banderaChaco.jpg}" id="img" height="45" />
+                    </a>
+                </div>
+                <div class="container py-4 text-center">
+                    <div class="copyright">
+                        &copy; Copyright <strong><span>Sección Sistemas</span></strong> Servicio Penitenciario
+                        Provincial
+                    </div>
+                    <div class="credits">
+                        Designed by <a href="#">Sección Sistemas</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script th:fragment="js" th:src="@{/js/home.js}"></script>
+
+    <script
+        th:if="${formulario.estadoDatosJudiciales == 'Pendiente' && formulario.estadoDatosCriminologicos == 'Pendiente'}">
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos Judiciales Pendientes',
+                text: 'Completa primero los datos judiciales antes de acceder a los datos criminológicos.',
+                confirmButtonText: 'OK',
+                onClose: () => {
+                    window.location.href = "@{'/detenidos/' + ${formulario.idDetenido} + '/datosJudiciales/nuevo'}";
+                }
+            });
+        </script>
+    <a th:if="${formulario.estadoDatosCriminologicos == 'Pendiente'}" class="pendiente"
+        th:href="@{'/detenidos/' + ${formulario.idDetenido} + '/datosCriminologicos/nuevo'}">
+        Pendiente
+    </a>
+    <span th:if="${formulario.estadoDatosCriminologicos == 'Completado'}" class="completado">
+        Completado
+    </span>
+
+
+</body>
+
+</html>

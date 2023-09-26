@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <META http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+        <div class="justify-conten-center align-items-center mt-5 m-4">
+            <div class="overflow-auto">
+                <h4 th:text="${titulo}" style="font-family:'Arial Narrow', Arial;
+                 color: rgb(59, 63, 59); font-size: 30px;" class="text-center"></h4>
+                <table class="table table-hover table table-bordered border border-1 caption-top" id="tablaSolicitantes">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre y Apellido</th>
+                            <th>Dni</th>
+                            <th>Ultimo Domicilio</th>
+                            <th>Situacion Laboral</th>
+                            <th>Unidad Solicitante</th>
+                            <th>Nombre del Padre</th>
+                            <th>Apellido del Padre</th>
+                            <th>Nombre de la Madre</th>
+                            <th>Apellido de la Madre</th>
+                            <th>situacion Educativa al Ingreso</th>
+                            <th>Pueblo Originario</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="d : ${detenidos}">
+                            <td th:text="${d.id}">1</td>
+                            <td th:text="${d.nombreApellido}">1</td>
+                            <td th:text="${d.dni}">1</td>                            
+                            <td th:text="${d.ultimoDomicilio}">Claudio</td>
+                            <td th:text="${d.situacionLaboral}">Claudio</td>
+                            <td th:text="${d.nombrePadre}">1</td>
+                            <td th:text="${d.apellidoPadre}">1</td>
+                            <td th:text="${d.nombreMadre}">1</td>
+                            <td th:text="${d.apellidoPadre}">1</td>
+                            <td th:text="${d.situacionEducativaIngreso}">1</td>
+                            <td th:text="${d.puebloOriginario}">1</td> 
+                            <td style="max-width
+                        : 40px;">
+                                <a th:href="@{/detenidos/editar/} + ${d.id}" class="btn btn-sm btn-warning"
+                                    title="Editar">
+                                    <i class="bx bxs-edit bx-spin"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <a th:href="@{/solicitantes/nuevo}" class="btn btn-primary my-5 mx-5 float-end"> Nuevo
+                        Solicitante</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:fragment="js" th:scr="@{/js/solicitantes.js}"></script>
+
+</body>
+
+</html>

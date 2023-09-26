@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- Booststrap 5.0.2 CSS CDN-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--JQuery ui css-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+    <!--Box Icons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title th:text="${titulo}"></title>
+
+    <!-- Datatables CSS -->
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.5/datatables.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/style/layout.css}">
+
+</head>
+
+<body>
+
+    <!-- Barra de Navegacion-->
+
+    <nav class="navbar navbar-expand-lg " id="navbar">
+        <div class="container-fluid" style="background-color:rgb(90, 92, 91);">
+            <a th:href="@{/home}" class="navbar-brand ms-1" style="display: inline-flex;">
+                <img alt="LOGO" th:src="@{/img/logo_criminologico.png}" height="45" />
+                <span class="nav-link text-responsive text-light">ADMISIÓN Y CUPO</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="bi bi-list" style="color: rgb(12, 12, 12)"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item"><a class="nav-link link-light" th:href="@{/usuarios/listado}">Usuarios</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link link-light" href="#" id="solicitudTab">Solicitud</a>
+                    </li>
+
+                    <div id="myModal" class="modal">
+                        <div id="modal-content" class="modal-content" style="text-align: justify;">
+                            <h2>Declaración de Responsabilidad y Autenticidad de Datos</h2>
+                            <p>Apreciado usuario,</p>
+                            <p>Le damos la bienvenida a nuestro sistema de registro de detenidos, donde su
+                                colaboración
+                                es esencial para garantizar la precisión y veracidad de la información. Antes de
+                                proceder con la carga de datos personales, datos judiciales, criminológicos y
+                                médicos
+                                del detenido, es fundamental que comprenda y acepte sus responsabilidades como
+                                usuario
+                                de este sistema.</p>
+                            <ol>
+                                <li><strong>Datos Obligatorios:</strong> Por favor, tenga en cuenta que todos los
+                                    campos
+                                    en los formularios de registro son de carácter obligatorio. Esto significa que
+                                    debe
+                                    proporcionar la información requerida en cada uno de los campos
+                                    correspondientes. La
+                                    precisión y veracidad de estos datos son esenciales para garantizar la
+                                    integridad de
+                                    nuestro sistema y la correcta administración de los detenidos.</li>
+                                <li><strong>Responsabilidad Personal:</strong> Al cargar información en los
+                                    formularios,
+                                    usted asume la responsabilidad de los datos que está ingresando. Declara bajo
+                                    juramento que todos los datos consignados son auténticos y veraces. Esto implica
+                                    que
+                                    está comprometido a proporcionar información precisa y actualizada, garantizando
+                                    que
+                                    cualquier dato ingresado refleje la realidad de la situación del detenido.</li>
+                                <li><strong>Veracidad de la Información:</strong> Es importante destacar que
+                                    proporcionar información falsa, inexacta o engañosa en cualquier formulario
+                                    puede
+                                    tener implicaciones legales y éticas. Nuestra plataforma se basa en la confianza
+                                    y
+                                    la colaboración de los usuarios para cumplir con los estándares más altos de
+                                    integridad.</li>
+                                <li><strong>Confirmación de Datos:</strong> Antes de confirmar la carga de datos en
+                                    cada
+                                    formulario, le instamos a revisar minuciosamente la información ingresada.
+                                    Asegúrese
+                                    de que todos los campos estén completos y que la información sea precisa y
+                                    actual.
+                                    Esta revisión contribuye significativamente a la calidad de los registros.</li>
+                                <li><strong>Compromiso con la Veracidad:</strong> Entendemos que la precisión y la
+                                    veracidad de los datos son fundamentales para el sistema y, más importante aún,
+                                    para
+                                    el bienestar de los detenidos. Su compromiso con la integridad de los registros
+                                    es
+                                    esencial para mantener la confianza en nuestro sistema.</li>
+                                <li><strong>Privacidad y Seguridad:</strong> Respetamos su privacidad y hemos
+                                    implementado medidas de seguridad para proteger la información ingresada. La
+                                    confidencialidad de los datos es una prioridad, y su colaboración en este
+                                    sentido es
+                                    igualmente importante.</li>
+                            </ol>
+                            <p>Al utilizar nuestro sistema y cargar información en los formularios, usted acepta y
+                                se
+                                compromete a cumplir con las responsabilidades y principios aquí mencionados. Su
+                                contribución es valiosa y esencial para el buen funcionamiento de nuestro sistema de
+                                registro de detenidos.</p>
+                            <p>Agradecemos su colaboración y su compromiso con la veracidad y la integridad de los
+                                datos.</p>
+                            <p>Atentamente,</p>
+                            <p>Servicio Penitenciario Provincial</p>
+                            <input type="checkbox" id="confirmCheckbox"> <!-- Agrega el checkbox -->
+                            <button id="acceptBtn" disabled>Aceptar</button>
+                            <!-- Deshabilita el botón inicialmente -->
+                            <button id="cancelBtn">Cancelar</button>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link link-light" th:href="@{/consultas}" style="float: right;">Consultas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-light" th:href="@{/graficos}" style="float: right;">Estadisticas</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a id="ddlink" href="#" class="nav-link dropdown-toggle link-light" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">
+                            <i class="bi bi-person-check-fill"></i>
+                            <span>Hola </span>
+                            <span sec:authorize="isAuthenticated()" th:text="${#authentication.name}"></span>
+                            <!-- <span sec:authentication="principal.authorities"></span> -->
+                        </a>
+                        <!-- opciones de usuario -->
+                        <ul class="dropdown-menu dropdown-menu-end ms-4" aria-labelledby="ddlink"
+                            style="background-color: rgb(68, 236, 124); color: azure;">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <i class="bi bi-person-badge"></i>
+                                    Cuenta
+                                </a>
+                                <a th:href="@{/usuarios/nuevaClave}" class="dropdown-item">
+                                    <i class="bi bi-gear"></i>
+                                    Configuración
+                                </a>
+                                <form id="frmSAlir" th:action="@{/logout}" method="post">
+                                    <a href="#" class="dropdown-item" onclick="$('#frmSAlir').submit();">
+                                        <i class="bi bi-person-fill-x"></i>
+                                        Cerrar Sesión
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- mensajes-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+        <i class='bx bx-info-circle bx-tada'></i>
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${warning != null}">
+        <i class='bx bx-message-rounded-dots bx-tada'></i>
+        <span th:text="${warning}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${danger != null}">
+        <i class='bx bxs-error bx-tada'></i>
+        <span th:text="${danger}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="cerrar"></button>
+    </div>
+
+    <div class="col col- mt-3 p-0">
+        <!--Lo que se reemplazara por el contenido de otras paginas-->
+        <div layout:fragment="contenido">...</div>
+    </div>
+
+
+    <!--JQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
+    <!--JQuery UI JS-->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+    <!--bootstrap 5.0.2 JS CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Sweet Alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.5/datatables.min.js"></script>
+
+    
+
+    
+
+
+
+    <!--seccion que sera reemplazada por link-->
+
+    <script th:replace=":: js"></script>
+
+    <script>
+
+        setInterval("cerrar()", 2000);
+
+        const cerrar = () => {
+            $(".alert").delay(500).slideUp(500, () => {
+                $(this).hide();
+            });
+        }
+
+    </script>
+
+    <script>
+        // Obtener el modal y los elementos
+        var modal = document.getElementById("myModal");
+        var acceptBtn = document.getElementById("acceptBtn");
+        var cancelBtn = document.getElementById("cancelBtn");
+        var confirmCheckbox = document.getElementById("confirmCheckbox");
+
+        // Mostrar el modal al hacer clic en "Solicitud"
+        document.getElementById("solicitudTab").addEventListener("click", function (event) {
+            // Prevenir el comportamiento predeterminado del enlace
+            event.preventDefault();
+            modal.style.display = "block";
+        });
+
+        // Habilitar el botón "Aceptar" cuando el checkbox está marcado
+        confirmCheckbox.addEventListener("change", function () {
+            acceptBtn.disabled = !confirmCheckbox.checked;
+        });
+
+        // Cuando se hace clic en "Aceptar", redirigir al formulario de detenidos/nuevo
+        acceptBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+            window.location.href = "/detenidos/nuevo"; // Asegúrate de que la ruta sea la correcta
+        });
+
+        // Cuando se hace clic en "Cancelar", cerrar el modal
+        cancelBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+    </script>
+
+
+</body>
+
+</html>

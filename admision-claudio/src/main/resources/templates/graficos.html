@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}"></title>
+
+
+</head>
+
+<body>
+    <div layout:fragment="contenido">
+
+        <canvas id="graficoFuerza"></canvas>
+        <canvas id="graficoSituacionLegal"></canvas>
+
+
+    </div>
+
+    <script th:fragment="js"></script>
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <script>
+        // Obtener los contextos de los lienzos de los gráficos
+        var ctxFuerza = document.getElementById('graficoFuerza').getContext('2d');
+        var ctxSituacionLegal = document.getElementById('graficoSituacionLegal').getContext('2d');
+
+        // Hacer una solicitud a la API para obtener los datos de los gráficos
+        fetch('http://localhost:8080/api/detenidos/graficos') // Reemplaza con la URL de tu API
+            .then(response => response.json())
+            .then(data => {
+                // Crear el gráfico de fuerza de Detenido
+                var graficoFuerza = new Chart(ctxFuerza, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Fuerza'],
+                        datasets: [{
+                            label: 'Fuerza',
+                            data: data.graficoFuerza,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                // Crear el gráfico de situación legal de DatosJudiciales
+                var graficoSituacionLegal = new Chart(ctxSituacionLegal, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Situación Legal'],
+                        datasets: [{
+                            label: 'Situación Legal',
+                            data: data.graficoSituacionLegal,
+                            backgroundColor: 'rgba(192, 75, 192, 0.2)',
+                            borderColor: 'rgba(192, 75, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+
+
+
+</body>
+
+</html>
